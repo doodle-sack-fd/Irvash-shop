@@ -1,13 +1,13 @@
-const forms = () => {
+import checkNumInputs from './checkNumInputs';
+import { closeModal } from './modals';
+
+const forms = (state) => {
+
     const form = document.querySelectorAll('form'),
         inputs = document.querySelectorAll('input'),
-        phoneInputs = document.querySelectorAll('input[name="user_phone"]');
+        popupCalcEnd = document.querySelector('.popup_calc_end');
 
-        phoneInputs.forEach(elem => {
-            elem.addEventListener('input', () => {
-                elem.value = elem.value.replace(/\D/, '')
-            });
-        });
+    checkNumInputs('input[name="user_phone"]');
 
     const message = {
         loading: 'Идет загрузка',
@@ -31,15 +31,23 @@ const forms = () => {
         });
     };
 
+
     form.forEach(item => {
         item.addEventListener('submit', (evt) => {
             evt.preventDefault();
+            
 
             let statusMessage = document.createElement('div');
             statusMessage.classList.add('status');
             item.appendChild(statusMessage);
 
             const formData = new FormData(item);
+            if (item.getAttribute('data-calc') === 'end') {
+                for (let key in state) {
+                    formData.append(key, state[key]);
+                }
+            }
+
 
             postData('assets/server.php', formData)
                 .then(res => {
@@ -52,9 +60,20 @@ const forms = () => {
                     setInterval(() => {
                         statusMessage.remove();
                     }, 5000);
+                    closeModal(popupCalcEnd);
+
+                    // clear value in object state (reset request)
+
+                    for (let key in state) {
+                        if (state.hasOwnProperty(key)) {
+                            delete state[key];
+                        }
+                    }
                 });
         });
+
     });
+
 };
 
 export default forms;
