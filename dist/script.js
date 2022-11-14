@@ -17837,6 +17837,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_cnangeModalState__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/cnangeModalState */ "./src/js/modules/cnangeModalState.js");
 /* harmony import */ var _modules_validation__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/validation */ "./src/js/modules/validation.js");
 /* harmony import */ var _modules_timer__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/timer */ "./src/js/modules/timer.js");
+/* harmony import */ var _modules_images__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./modules/images */ "./src/js/modules/images.js");
+
 
 
 
@@ -17856,6 +17858,7 @@ window.addEventListener('DOMContentLoaded', function () {
   Object(_modules_forms__WEBPACK_IMPORTED_MODULE_3__["default"])(modalState);
   Object(_modules_validation__WEBPACK_IMPORTED_MODULE_5__["default"])();
   Object(_modules_timer__WEBPACK_IMPORTED_MODULE_6__["default"])('.container1', '2023-11-14');
+  Object(_modules_images__WEBPACK_IMPORTED_MODULE_7__["default"])();
 });
 
 /***/ }),
@@ -18070,6 +18073,59 @@ var forms = function forms(state) {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (forms);
+
+/***/ }),
+
+/***/ "./src/js/modules/images.js":
+/*!**********************************!*\
+  !*** ./src/js/modules/images.js ***!
+  \**********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var images = function images() {
+  var imgPopup = document.createElement('div'),
+      workArea = document.querySelector('.works'),
+      bigImg = document.createElement('img');
+  imgPopup.classList.add('popup');
+  workArea.appendChild(imgPopup);
+  imgPopup.style.justifyContent = 'center';
+  imgPopup.style.alignItems = 'center';
+  imgPopup.style.display = 'none';
+  bigImg.style.width = '600px';
+  bigImg.style.height = '600px';
+  imgPopup.appendChild(bigImg);
+  workArea.addEventListener('click', function (evt) {
+    evt.preventDefault();
+    var target = evt.target;
+    /*
+       target - Если элемент поддерживает событие клик, 
+     и содержит класс preview
+      */
+
+    if (target && target.classList.contains('preview')) {
+      imgPopup.style.display = 'flex';
+      /* target - элемент на котором произошло событие,
+       обращается к родительской ноде и получает атрибут родительской ноды,
+        который нас интересует и затем устанавливаем*/
+
+      var path = target.parentNode.getAttribute('href');
+      bigImg.setAttribute('src', path);
+      document.body.style.overflow = 'hidden';
+    }
+    /* Если пользователь кликнул на подложку */
+
+
+    if (target && target.matches('div.popup')) {
+      imgPopup.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+  });
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (images);
 
 /***/ }),
 

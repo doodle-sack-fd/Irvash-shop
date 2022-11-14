@@ -5,6 +5,7 @@ import forms from './modules/forms';
 import changeModalState from './modules/cnangeModalState';
 import validation from './modules/validation';
 import timer from './modules/timer';
+import images from './modules/images'
 
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -20,5 +21,5 @@ window.addEventListener('DOMContentLoaded', () => {
     forms(modalState);
     validation();
     timer('.container1', '2023-11-14');
-
+    images();
 });
